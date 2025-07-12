@@ -93,7 +93,7 @@ const Home = () => {
             });
     }, []);
 
-     console.log(books)
+    console.log(books)
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/aksessuars/')
@@ -112,13 +112,15 @@ const Home = () => {
             });
     }, []);
 
-     console.log(aksessuars)
+    console.log(aksessuars)
 
     return (
         <div className='w-full min-h-screen bg-gray-50'>
-            <div className='w-full h-[50px] py-2 px-2 bg-white shadow-sm sticky top-0 z-10 flex items-center justify-center'>
+            <div
+                className='w-full h-[50px] py-2 px-2 bg-white shadow-sm sticky top-0 z-10 flex items-center justify-center'>
                 <h1 className='md:text-[20px] text-[15px] font-semibold text-gray-800 text-center'>
-                    <span className='font-bold  text-green-700'> An-najimga</span> xush kelibsiz, {profile?.username || 'Guest'}
+                    <span className='font-bold  text-green-700'> An-najimga</span> xush
+                    kelibsiz, {profile?.username || 'Guest'}
                 </h1>
                 {/*<div className='overflow-x-auto whitespace-nowrap scrollbar-hide mt-4'>*/}
                 {/*    <button*/}
@@ -184,6 +186,14 @@ const Home = () => {
                                 </div>
                             </div>
                         ))}
+                        {profile?.is_staff && (
+                            <button
+                                onClick={() => navigate('/add-book')}
+                                className="fixed bottom-18 right-4 md:bottom-6 md:right-6 bg-green-600 text-white px-4 py-2 md:px-5 md:py-3 rounded-full shadow-lg hover:bg-green-700 transition duration-300 text-sm md:text-base z-50"
+                            >
+                                + Yangi kitob qo‘shish
+                            </button>
+                        )}
                     </div>
                 )}
             </div>

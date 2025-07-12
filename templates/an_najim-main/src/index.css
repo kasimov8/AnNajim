@@ -24,6 +24,12 @@ body {
   background: #f1f2f3;
 }
 
+
+.form-input {
+  @apply mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:ring-green-500 focus:border-green-500;
+}
+
+
 #navbar a.active {
   /* background: #fff; */
   color: #2B7FFF;

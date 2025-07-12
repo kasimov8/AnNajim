@@ -57,7 +57,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'phone', 'email']
+        fields = ['username', 'phone', 'email', 'is_staff', 'is_superuser']
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:

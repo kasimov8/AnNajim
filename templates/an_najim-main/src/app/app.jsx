@@ -2,6 +2,8 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {Register, Login, Home, Layout, Search, Like, Cart, Profile, BookDetail} from '../constant';
 import useAuthStore from '../store/useAuthStore';
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import AddBook from "../pages/AddBook.jsx"
+import EditBook from "../pages/EditBook.jsx";
 
 const App = () => {
     const {user} = useAuthStore(); // HOOK ICHIDAN USERNI OL!
@@ -31,6 +33,8 @@ const App = () => {
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/book/:id" element={<BookDetail/>}/>
+            <Route path="/add-book" element={<AddBook />} />
+            <Route path="/edit-book/:id" element={<EditBook />} />
 
 
         </Routes>

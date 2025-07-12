@@ -1,5 +1,8 @@
+from aiohttp import request
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -55,6 +58,18 @@ class BookView(APIView):
         return Response(serializer.data)
 
 
+@api_view(['POST'])
+def add_book(request):
+    serializer = BookSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    else:
+        print(serializer.errors)
+        return Response(serializer.errors, status=400)
+
+
+
 class AksessuarView(APIView):
 
     def get(self, request):
@@ -64,9 +79,26 @@ class AksessuarView(APIView):
 
 
 class BookDetailView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+
     def get(self, request, pk):
         book = get_object_or_404(Book, pk=pk)
         serializer = BookSerializer(book)
         return Response(serializer.data)
+
+    def delete(self, request, pk):
+        book = get_object_or_404(Book, pk=pk)
+        book.delete()
+        return Response({"detail": "Book deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, pk):
+        book = get_object_or_404(Book, pk=pk)
+        serializer = BookSerializer(book, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 

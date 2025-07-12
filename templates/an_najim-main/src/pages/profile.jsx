@@ -136,6 +136,10 @@ const Profile = () => {
                 <p className="text-gray-600 mb-2 flex"> <Phone className='py-[3px] px-[3px] mr-2'/> {data.phone || 'No phone number'}</p>
                 <p className="text-gray-600 mb-2 flex"><Mail className='py-[3px] px-[3px] mr-2'/> {data.email || 'No email'}</p>
 
+                {data?.is_staff && (
+                    <p className="text-green-600 mb-2 flex">Siz adminsiz</p>
+                )}
+
                 {data?.map && (
                     <div className="w-full mb-4">
                         <iframe
