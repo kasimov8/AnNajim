@@ -141,7 +141,7 @@ const Search = () => {
                       ? product.title.slice(0, 60) + '...'
                       : product.title}
                   </div>
-                  <div className="text-blue-500 font-bold text-sm sm:text-base">${product.price}</div>
+                  <div className="text-blue-500 font-bold text-sm sm:text-base">{product.price} so'm</div>
                 </div>
               </div>
             ))}

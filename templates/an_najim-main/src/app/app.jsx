@@ -4,6 +4,7 @@ import useAuthStore from '../store/useAuthStore';
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
 import AddBook from "../pages/AddBook.jsx"
 import EditBook from "../pages/EditBook.jsx";
+import Orders from "../pages/Orders.jsx";
 
 const App = () => {
     const {user} = useAuthStore(); // HOOK ICHIDAN USERNI OL!
@@ -18,6 +19,7 @@ const App = () => {
                 <Route path="/search" element={<Search/>}/>
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/like" element={<Like/>}/>
+                <Route path="/orders/" element={<Orders/>} />
                 <Route path="/profile" element={<Profile/>}/>
             </Route>
 

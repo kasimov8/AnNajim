@@ -246,14 +246,14 @@ const BookDetail = () => {
                         <div>
                             <button
                                 onClick={handleEdit}
-                                className='bg-blue-500 text-white rounded-xl hover:bg-blue-600 mt-2 w-28 h-10 mr-126'
+                                className='bg-blue-500 text-white rounded-xl hover:bg-blue-600 mt-2 w-28 h-10 mr-2'
                             >
                                 ✏️ Tahrirlash
                             </button>
 
                             <button
                                 onClick={handleDelete}
-                                className='bg-red-500 text-white rounded-xl hover:bg-red-600 mt-2 w-28 h-10 '
+                                className='bg-red-500 text-white rounded-xl hover:bg-red-600 mt-2 w-28 h-10'
                             >
                                 🗑 O‘chirish
                             </button>
