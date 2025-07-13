@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import RegisterBannerImg from '../assets/images/books.world.jpg';
 import useAuthStore from '../store/useAuthStore';
+import { base_address } from '../api/api_address';
 
 
 const Register = () => {
@@ -20,7 +21,7 @@ const Register = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/register/')
+    fetch(`${base_address}/register/`)
       .then(res => res.json())
       .then(data => setData(data))
       .catch(err => console.error("Xatolik:", err));
@@ -46,7 +47,7 @@ const Register = () => {
 
     if (!phonenumbers.includes(phone)) {
       try {
-        const response = await fetch("http://127.0.0.1:8000/register/", {
+        const response = await fetch(`${base_address}/register/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

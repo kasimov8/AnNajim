@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import RegisterBannerImg from '../assets/images/books.world.jpg';
 import {ToastContainer, toast} from 'react-toastify'
+import { base_address } from '../api/api_address';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/login/", {
+            const response = await fetch(`${base_address}/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

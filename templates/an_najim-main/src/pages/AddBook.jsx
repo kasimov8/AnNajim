@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import { base_address } from '../api/api_address';
 
 
 
@@ -44,7 +45,7 @@ const AddBook = () => {
     data.append('category', formData.discount);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/add_books/', {
+      const response = await fetch(`${base_address}add_books/`, {
         method: 'POST',
         body: data,
       });

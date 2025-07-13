@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from './axios.js';
 import {Link} from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import { base_address } from '../api/api_address.js';
 
 const MyOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const MyOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await axios.get('http://127.0.0.1:8000/orders/my/');
+                const res = await axios.get(`${base_address}/orders/my/`);
                 setOrders(res.data);
             } catch (err) {
                 console.error('Buyurtmalarni olishda xatolik:', err);

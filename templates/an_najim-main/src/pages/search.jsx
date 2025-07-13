@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { base_address } from '../api/api_address';
 
 const LOCAL_KEY = 'searchHistory';
 
@@ -13,7 +14,7 @@ const Search = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/books/')
+    fetch(`${base_address}/books/`)
       .then(res => res.json())
       .then(data => setProducts(data));
   }, []);
@@ -131,7 +132,7 @@ const Search = () => {
                 className="flex flex-col sm:flex-row w-full bg-white rounded-lg shadow p-3 gap-4 cursor-pointer hover:opacity-90 transition"
               >
                 <img
-                  src={`http://127.0.0.1:8000${product.image}`}
+                  src={`${base_address}${product.image}`}
                   alt={product.title}
                   className="w-full sm:w-24 h-32 object-contain sm:h-24"
                 />

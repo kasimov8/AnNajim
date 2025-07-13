@@ -5,6 +5,7 @@ import {MapPin, User2} from 'lucide-react';
 import {ToastContainer, toast} from "react-toastify";
 import {Phone, Mail} from 'lucide-react';
 import axios from './axios.js';
+import { base_address } from '../api/api_address.js';
 
 
 const LOCAL_PROFILE_KEY = 'profileData';
@@ -42,7 +43,7 @@ const Profile = () => {
 
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/profile/')
+        axios.get(`${base_address}/profile/`)
             .then(res => {
                 setData(res.data);
             })
@@ -89,7 +90,7 @@ const Profile = () => {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/profile/', {
+            const response = await fetch(`${base_address}/profile/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

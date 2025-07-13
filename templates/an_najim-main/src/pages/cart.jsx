@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import { base_address } from '../api/api_address';
 
 const LOCAL_KEY = 'cartProducts';
 
@@ -78,7 +79,7 @@ const Cart = () => {
 
         try {
             await axios.post(
-                'http://127.0.0.1:8000/orders/',
+                `${base_address}/orders/`,
                 {orders, location},
                 {
                     headers: {
@@ -112,7 +113,7 @@ const Cart = () => {
                         {cart.map(item => (
                             <div key={item.id} className="flex items-center bg-white rounded-lg shadow p-3 gap-4">
                                 <img
-                                    src={`http://127.0.0.1:8000${item.image}`}
+                                    src={`${base_address}${item.image}`}
                                     alt={item.title}
                                     className="w-16 h-16 object-contain rounded"
                                 />

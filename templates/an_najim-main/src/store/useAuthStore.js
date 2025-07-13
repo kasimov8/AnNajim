@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { base_address } from '../api/api_address';
 
 const useAuthStore = create((set) => ({
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -19,7 +20,7 @@ const useAuthStore = create((set) => ({
   deleteAccount: async () => {
     const token = localStorage.getItem('access');
     try {
-      const response = await fetch("http://127.0.0.1:8000/delete/", {
+      const response = await fetch(`${base_address}/delete/`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,

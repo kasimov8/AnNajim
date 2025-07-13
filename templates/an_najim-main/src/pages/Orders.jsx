@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import { base_address } from '../api/api_address';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const Order = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/orders/list/', {
+        const res = await axios.get(`${base_address}/orders/list/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

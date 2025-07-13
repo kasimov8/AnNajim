@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { base_address } from '../api/api_address';
 
 const LOCAL_KEY = 'likedProducts';
 
@@ -43,7 +44,7 @@ const Like = () => {
               </button>
 
               <img
-                src={`http://127.0.0.1:8000${product?.image}`}
+                src={`${base_address}${product?.image}`}
                 alt={product.title}
                 className="w-full h-48 object-contain p-3"
               />

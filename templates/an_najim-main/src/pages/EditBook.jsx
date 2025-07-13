@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { base_address } from '../api/api_address';
 
 const EditBook = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const EditBook = () => {
 
   // Ma'lumotni yuklab olish
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/booksdetail/${id}/`)
+    fetch(`${base_address}/booksdetail/${id}/`)
       .then((res) => res.json())
       .then((data) => {
         setFormData({
@@ -32,7 +33,7 @@ const EditBook = () => {
           numberOfbooks: data.numberOfbooks || '',
           discount: data.discount || '',
         });
-        setPreviewImage(`http://127.0.0.1:8000${data.image}`);
+        setPreviewImage(`${base_address}${data.image}`);
         setLoading(false);
       })
       .catch((error) => {
@@ -72,7 +73,7 @@ const EditBook = () => {
 
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/booksdetail/${id}/`, {
+      const response = await fetch(`${base_address}/booksdetail/${id}/`, {
         method: 'PUT',
         body: updatedData,
       });

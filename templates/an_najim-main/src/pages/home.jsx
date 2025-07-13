@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import {useEffect, useState} from 'react';
 import axios from "./axios.js";
+import { base_address } from '../api/api_address.js';
 
 const Home = () => {
     const {user} = useAuthStore();
@@ -15,7 +16,7 @@ const Home = () => {
     const [profile, setProfile] = useState({});
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/profile/')
+        axios.get(`${base_address}/profile/`)
             .then(res => {
                 setProfile(res.data);
             })
@@ -28,7 +29,7 @@ const Home = () => {
     console.log(profile)
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/books/')
+        fetch(`${base_address}/books/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Tarmoq xatosi!');
@@ -48,7 +49,7 @@ const Home = () => {
     console.log(books)
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/discountedbooks/')
+        fetch(`${base_address}/discountedbooks/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Tarmoq xatosi!');
@@ -96,7 +97,7 @@ const Home = () => {
                             >
                                 <div className='w-full h-[150px] flex items-center justify-center'>
                                     <img
-                                        src={`http://127.0.0.1:8000${books.image}`}
+                                        src={`${base_address}${books.image}`}
                                         alt={books.title}
                                         className='w-[90%] h-[90%] object-cover rounded-[10px]'
                                     />
@@ -138,7 +139,7 @@ const Home = () => {
                             >
                                 <div className='w-full h-[150px] flex items-center justify-center'>
                                     <img
-                                        src={`http://127.0.0.1:8000${books.image}`}
+                                        src={`${base_address}${books.image}`}
                                         alt={books.title}
                                         className='w-[90%] h-[90%] object-cover rounded-[10px]'
                                     />

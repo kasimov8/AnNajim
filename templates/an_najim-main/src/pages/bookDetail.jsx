@@ -7,6 +7,7 @@ import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "./axios.js";
+import { base_address } from '../api/api_address.js';
 
 
 const CART_KEY = 'cartProducts';
@@ -26,7 +27,7 @@ const BookDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/profile/')
+        axios.get(`${base_address}/profile/`)
             .then(res => {
                 setProfile(res.data);
             })
@@ -40,7 +41,7 @@ const BookDetail = () => {
     useEffect(() => {
         setLoading(true);
         setError(null);
-        fetch(`http://127.0.0.1:8000/booksdetail/${id}`)
+        fetch(`${base_address}/booksdetail/${id}`)
             .then(res => res.json())
             .then(product => {
                 setProduct(product);
@@ -63,21 +64,6 @@ const BookDetail = () => {
         setCartQuantity(existing ? existing.quantity : 0);
     }, [product]);
 
-    // useEffect(() => {
-    //   if (!product) return;
-    //   setSimilarError(null);
-    //   fetch('http://127.0.0.1:8000/books/')
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       const similars = data.filter(
-    //         item => item.category === product.category && item.id !== product.id
-    //       );
-    //       setSimilarProducts(similars);
-    //     })
-    //     .catch(() => {
-    //       setSimilarError("O'xshash mahsulotlarni yuklashda xato");
-    //     });
-    // }, [product]);
 
     const handleAddToCart = () => {
         const stored = JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -129,7 +115,7 @@ const BookDetail = () => {
         const confirmDelete = window.confirm('Rostdan ham o‘chirmoqchimisiz?');
         if (!confirmDelete) return;
 
-        const response = await fetch(`http://127.0.0.1:8000/booksdetail/${id}/`, {
+        const response = await fetch(`${base_address}/booksdetail/${id}/`, {
             method: 'DELETE',
         });
 
