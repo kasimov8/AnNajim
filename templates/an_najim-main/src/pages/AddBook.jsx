@@ -14,7 +14,7 @@ const AddBook = () => {
     description: '',
     price: '',
     numberOfbooks: '',
-    category: '',
+    discount: '',
   });
 
   const handleChange = (e) => {
@@ -41,7 +41,7 @@ const AddBook = () => {
     data.append('description', formData.description);
     data.append('price', formData.price);
     data.append('numberOfbooks', formData.numberOfbooks);
-    data.append('category', formData.category);
+    data.append('category', formData.discount);
 
     try {
       const response = await fetch('http://127.0.0.1:8000/add_books/', {
@@ -56,7 +56,7 @@ const AddBook = () => {
           description: '',
           price: '',
           number_of_books: '',
-          category: '',
+          discount: '',
           image: null,
         });
         navigate('/home')
@@ -152,21 +152,18 @@ const AddBook = () => {
           />
         </div>
 
-        {/* Kategoriya */}
+
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">Kategoriya</label>
-          <select
-            name="category"
-            id="category"
-            value={formData.category}
+          <label htmlFor="discount" className="block text-sm font-medium text-gray-700">Chegirma qilasizmi? </label>
+          <input
+            type="number"
+            name="discount"
+            id="discount"
+            value={formData.discount || ''}
             onChange={handleChange}
             required
             className="form-input"
-          >
-            <option value="">-- Kategoriya tanlang --</option>
-            <option value="badiiy">Kitoblar</option>
-            <option value="ilmiy">Aksessuarlar</option>
-          </select>
+          />
         </div>
 
         {/* Rasm */}

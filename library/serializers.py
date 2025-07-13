@@ -1,8 +1,10 @@
+from decimal import Decimal, ROUND_HALF_UP
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-from .models import CustomUser, Book, Aksessuar
+from .models import CustomUser, Book, Order
 
 
 # class PhoneTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -60,11 +62,40 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['username', 'phone', 'email', 'is_staff', 'is_superuser']
 
 class BookSerializer(serializers.ModelSerializer):
+    discounted_price = serializers.SerializerMethodField()
+
     class Meta:
         model = Book
         fields = '__all__'
 
-class AksessuarSerializer(serializers.ModelSerializer):
+    def get_discounted_price(self, obj):
+        if obj.discount > 0:
+            discounted = obj.price - (obj.price * obj.discount / 100)
+            return discounted
+        return obj.price
+
+class OrderSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    phone_number = serializers.CharField(source='user.phone')
+    book = serializers.CharField(source='book.title')
+    book_image = serializers.SerializerMethodField()
+    total_price = serializers.SerializerMethodField()
+
     class Meta:
-        model = Aksessuar
-        fields = '__all__'
+        model = Order
+        fields = ['id', 'user', 'phone_number', 'book', 'price', 'quantity', 'total_price', 'location', 'created_at', 'book_image']
+
+
+    def get_user(self, obj):
+        return f"{obj.user.first_name} {obj.user.last_name}".strip() or obj.user.username
+
+    def get_total_price(self, obj):
+        return obj.total_price
+
+    def get_book_image(self, obj):
+        request = self.context.get('request')
+        if obj.book.image and request:
+            return request.build_absolute_uri(obj.book.image.url)
+        return None
+

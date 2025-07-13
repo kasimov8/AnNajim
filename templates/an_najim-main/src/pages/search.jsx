@@ -64,11 +64,11 @@ const Search = () => {
                 setShowResults(false);
               }}
               placeholder="Mahsulot qidirish..."
-              className="min-w-0 w-full h-12 pl-12 pr-4 rounded-l-lg border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 outline-none transition text-sm sm:text-base"
+              className="min-w-0 w-full h-12 pl-12 pr-4 rounded-l-lg border border-gray-300 focus:border-green-600 focus:ring focus:ring-blue-200 outline-none transition text-sm sm:text-base"
             />
             <button
               type="submit"
-              className="px-6 bg-blue-500 text-white rounded-r-lg font-semibold hover:bg-blue-600 transition"
+              className="px-6 bg-green-600 text-white rounded-r-lg font-semibold hover:bg-green-700 transition"
             >
               Qidirish
             </button>
@@ -101,7 +101,7 @@ const Search = () => {
                   <button
                     type="button"
                     onClick={() => handleHistoryClick(item)}
-                    className="hover:text-blue-600 transition"
+                    className="hover:text-green-600 transition"
                   >
                     {item}
                   </button>
@@ -141,7 +141,8 @@ const Search = () => {
                       ? product.title.slice(0, 60) + '...'
                       : product.title}
                   </div>
-                  <div className="text-blue-500 font-bold text-sm sm:text-base">{product.price} so'm</div>
+                  <div className="font-bold text-sm sm:text-base">{product.author.slice(0, 20)}...</div>
+                  <div className="text-green-600 font-bold text-sm sm:text-base">{product.price} so'm</div>
                 </div>
               </div>
             ))}

@@ -50,10 +50,10 @@ const Login = () => {
                 <div
                     className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[75%] xl:w-[60%] bg-white rounded-2xl shadow-md overflow-hidden">
                     <div className="py-6 px-4 flex justify-center">
-                        <h1 className="text-2xl text-blue-500 font-bold text-center">Tizimga kirish</h1>
+                        <h1 className="text-2xl text-green-600 font-bold text-center">Tizimga kirish</h1>
                     </div>
 
-                    <div className="bg-[#2970ff] rounded-tl-[3rem] py-8 px-4 sm:px-6">
+                    <div className="bg-green-600 rounded-tl-[3rem] py-8 px-4 sm:px-6">
                         <ToastContainer/>
                         <div className="mb-4">
                             <label className="text-white block">Username:</label>
@@ -81,7 +81,7 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            className="w-full h-[40px] bg-white text-[#2970ff] font-bold rounded-md cursor-pointer"
+                            className="w-full h-[40px] bg-white text-green-600 font-bold rounded-md cursor-pointer"
                         >
                             Tizimga kirish
                         </button>

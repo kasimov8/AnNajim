@@ -6,6 +6,7 @@ import {ChevronDownIcon} from '@heroicons/react/20/solid';
 import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "./axios.js";
 
 
 const CART_KEY = 'cartProducts';
@@ -25,25 +26,16 @@ const BookDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('access');
-
-        fetch('http://127.0.0.1:8000/profile/', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
+        axios.get('http://127.0.0.1:8000/profile/')
             .then(res => {
-                if (!res.ok) throw new Error("Token noto‘g‘ri yoki muddati tugagan.");
-                return res.json();
+                setProfile(res.data);
             })
-            .then(profile => setProfile(profile))
-
             .catch(err => {
                 console.error("Xatolik:", err);
-                alert("Token xato yoki foydalanuvchi tizimga kirmagan.");
+                // alert("Token xato yoki foydalanuvchi tizimga kirmagan.");
             });
     }, []);
+
 
     useEffect(() => {
         setLoading(true);
@@ -142,8 +134,11 @@ const BookDetail = () => {
         });
 
         if (response.status === 204) {
-            alert('Kitob o‘chirildi!');
-            navigate('/home');
+            toast.success("Kitob o'chirildi")
+            toast.info("Azgina qisib turing")
+            setTimeout(() => {
+                navigate('/home');
+            }, 3000)
         } else {
             alert('Xatolik yuz berdi.');
         }
@@ -174,16 +169,17 @@ const BookDetail = () => {
 
     return (
         <div className='w-full min-h-screen py-4 px-2 sm:px-4 bg-gray-50'>
+            <ToastContainer />
             <div className='w-full h-[50px] flex items-center justify-between mb-4'>
                 <div className='flex items-center gap-2'>
-                    <ChevronLeft/> <Link to='/home' className="text-blue-600 hover:underline">Bosh sahifaga
+                    <ChevronLeft/> <Link to='/home' className="text-green-600 hover:underline">Bosh sahifaga
                     qaytish</Link>
                 </div>
                 <button
-                    className={`py-2 px-2 bg-white rounded-[10px] cursor-pointer shadow hover:bg-blue-50 transition ${liked ? 'ring-2 ring-red-400' : ''}`}
+                    className={`py-2 px-2 bg-white rounded-[10px] cursor-pointer shadow hover:bg-blue-50 transition ${liked ? 'ring-2 ring-green-500' : ''}`}
                     onClick={handleLike}
                 >
-                    <Heart className={liked ? "text-red-500 fill-red-500" : "text-blue-500"}
+                    <Heart className={liked ? "text-green-600 fill-green-600" : "text-green-700"}
                            fill={liked ? "#ef4444" : "none"}/>
                 </button>
             </div>
@@ -202,13 +198,13 @@ const BookDetail = () => {
                     <div className='relative'>
                         {/*<p className='font-bold text-gray-600 text-sm sm:text-base'>{product.category}</p>*/}
                         <h1 className='text-[18px] sm:text-[25px] md:text-[25px] font-bold mt-2 text-black'><span
-                            className='font-bold text-blue-500'>Kitob nomi: </span> {product.title}</h1>
-                        <h2 className='absolute top-[-20px] right-[1px] md:text-[20px] text-[17px] font-bold mt-2 text-blue-500'>{product.price} so'm</h2>
-                        <h2 className='text-[15px] mt-2 text-black-500'><span className='font-bold text-blue-500'>Kitoblar soni:</span> {product.numberOfbooks} ta
+                            className='font-bold text-green-600'>Kitob nomi: </span> {product.title}</h1>
+                        <h2 className='absolute top-[-20px] right-[1px] md:text-[20px] text-[17px] font-bold mt-2 text-green-600'>{product.price} so'm</h2>
+                        <h2 className='text-[15px] mt-2 text-black-500'><span className='font-bold text-green-600'>Kitoblar soni:</span> {product.numberOfbooks} ta
                         </h2>
                         <Disclosure as="div" className="p-2" defaultOpen={true}>
                             <DisclosureButton className="group flex w-full items-center justify-between">
-                <span className="text-sm/6 text-blue-500 font-bold">
+                <span className="text-sm/6 text-green-600 font-bold">
                   Kitob haqida
                 </span>
                                 <ChevronDownIcon className="size-5 text-black group-data-open:rotate-180"/>
@@ -222,7 +218,7 @@ const BookDetail = () => {
 
                     {cartQuantity === 0 ? (
                         <button
-                            className='w-full h-[45px] sm:h-[50px] bg-blue-500 text-white rounded-[10px] font-semibold text-base sm:text-lg transition hover:bg-blue-600 mt-4'
+                            className='w-full h-[45px] sm:h-[50px] bg-green-600 text-white rounded-[10px] font-semibold text-base sm:text-lg transition hover:bg-green-700 mt-4'
                             onClick={handleAddToCart}
                         >
                             Savatga qo'shish
@@ -236,7 +232,7 @@ const BookDetail = () => {
                             </button>
                             <span className='text-lg font-semibold'>{cartQuantity}</span>
                             <button
-                                className='w-10 h-10 bg-blue-500 text-white rounded-lg text-xl'
+                                className='w-10 h-10 bg-green-600 text-white rounded-lg text-xl'
                                 onClick={handleIncrement}
                             >+
                             </button>
@@ -246,16 +242,15 @@ const BookDetail = () => {
                         <div>
                             <button
                                 onClick={handleEdit}
-                                className='bg-blue-500 text-white rounded-xl hover:bg-blue-600 mt-2 w-28 h-10 mr-2'
+                                className='bg-green-600 text-white rounded-xl hover:bg-green-700 mt-2 w-28 h-10 mr-2'
                             >
-                                ✏️ Tahrirlash
+                                Tahrirlash
                             </button>
 
                             <button
                                 onClick={handleDelete}
                                 className='bg-red-500 text-white rounded-xl hover:bg-red-600 mt-2 w-28 h-10'
-                            >
-                                🗑 O‘chirish
+                            >O‘chirish
                             </button>
                         </div>
                     )}

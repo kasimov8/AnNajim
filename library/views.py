@@ -5,13 +5,13 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 # from .serializers import PhoneTokenObtainPairSerializer
 
-from .models import CustomUser, Book, Aksessuar
-from .serializers import RegisterSerializer, ProfileSerializer, BookSerializer, AksessuarSerializer
+from .models import CustomUser, Book, Order
+from .serializers import RegisterSerializer, ProfileSerializer, BookSerializer, OrderSerializer
 
 
 @api_view(['POST', 'GET'])
@@ -53,7 +53,7 @@ class DeleteUserView(APIView):
 class BookView(APIView):
 
     def get(self, request):
-        books = Book.objects.all()
+        books = Book.objects.filter(discount__exact=0)
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
@@ -67,16 +67,6 @@ def add_book(request):
     else:
         print(serializer.errors)
         return Response(serializer.errors, status=400)
-
-
-
-class AksessuarView(APIView):
-
-    def get(self, request):
-        aksessuars = Aksessuar.objects.all()
-        serializer = AksessuarSerializer(aksessuars, many=True)
-        return Response(serializer.data)
-
 
 class BookDetailView(APIView):
     parser_classes = [MultiPartParser, FormParser]
@@ -102,3 +92,61 @@ class BookDetailView(APIView):
 
 
 
+class OrderCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        orders_data = request.data.get('orders', [])
+        location = request.data.get('location', '')
+
+        if not location:
+            return Response({'error': 'Manzil kiritilishi kerak.'}, status=400)
+
+        for item in orders_data:
+            book_id = item.get('book')
+            quantity = item.get('quantity', 1)
+
+            try:
+                book = Book.objects.get(id=book_id)
+
+                if book.numberOfbooks < quantity:
+                    return Response({'error': f"'{book.title}' kitobidan {quantity} dona qolmagan."}, status=400)
+
+                book.numberOfbooks -= quantity
+                book.save()
+
+                Order.objects.create(
+                    user=request.user,
+                    book=book,
+                    quantity=quantity,
+                    location=location,
+                    price=book.price,
+                )
+
+            except Book.DoesNotExist:
+                return Response({'error': f'Book ID {book_id} topilmadi.'}, status=400)
+
+        return Response({'message': 'Buyurtmalar saqlandi!'}, status=201)
+
+
+class OrderListView(generics.ListAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class MyOrdersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        orders = Order.objects.filter(user=user)
+        serializer = OrderSerializer(orders, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+class DiscountedBooks(APIView):
+    def get(self, request):
+        books = Book.objects.filter(discount__gt=0)
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)

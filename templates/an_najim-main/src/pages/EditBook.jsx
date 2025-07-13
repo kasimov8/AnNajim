@@ -12,7 +12,7 @@ const EditBook = () => {
     description: '',
     price: '',
     numberOfbooks: '',
-    category: '',
+    discount: '',
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -30,7 +30,7 @@ const EditBook = () => {
           description: data.description || '',
           price: data.price || '',
           numberOfbooks: data.numberOfbooks || '',
-          category: data.category || '',
+          discount: data.discount || '',
         });
         setPreviewImage(`http://127.0.0.1:8000${data.image}`);
         setLoading(false);
@@ -67,6 +67,7 @@ const EditBook = () => {
     updatedData.append('price', formData.price);
     updatedData.append('numberOfbooks', formData.numberOfbooks);
     updatedData.append('category', formData.category);
+    updatedData.append('discount', formData.discount);
 
 
 
@@ -91,7 +92,7 @@ const EditBook = () => {
 
   return (
     <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">✏️ Kitobni tahrirlash</h2>
+      <h2 className="text-2xl font-bold mb-4">Kitobni tahrirlash</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -145,16 +146,16 @@ const EditBook = () => {
 
         <input
           type="text"
-          name="category"
-          value={formData.category}
+          name="discount"
+          value={formData.discount}
           onChange={handleChange}
-          placeholder="Kategoriya"
+          placeholder="Chegirma"
           className="w-full border rounded px-3 py-2"
           required
         />
 
         <div>
-          <label className="block mb-1 font-medium">📷 Yangi rasm (ixtiyoriy):</label>
+          <label className="block mb-1 font-medium">Yangi rasm (ixtiyoriy):</label>
           <input
             type="file"
             name="image"
@@ -174,7 +175,7 @@ const EditBook = () => {
         <div className="flex gap-3">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
             Saqlash
           </button>

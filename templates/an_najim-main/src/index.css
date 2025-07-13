@@ -37,7 +37,7 @@ body {
 }
 
 #navbar a.active #icon {
-  color: #2B7FFF;
+  color: #16a34a;
 }
 
 @keyframes navbarsIcon {
@@ -54,9 +54,9 @@ body {
   height: 100px;
   background: transparent;
   border-bottom: 3px solid transparent;
-  border-top: 3px solid #2B7FFF;
-  border-left: 3px solid #2B7FFF;
-  border-right: 3px solid #2B7FFF;
+  border-top: 3px solid #16a34a;
+  border-left: 3px solid #16a34a;
+  border-right: 3px solid #16a34a;
   border-radius: 50%;
   animation: homeLoader 1s linear infinite;
 }

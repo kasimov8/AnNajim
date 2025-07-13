@@ -5,6 +5,7 @@ import ProtectedRoute from "../components/ProtectedRoute.jsx";
 import AddBook from "../pages/AddBook.jsx"
 import EditBook from "../pages/EditBook.jsx";
 import Orders from "../pages/Orders.jsx";
+import MyOrders from '../pages/MyOrders.jsx';
 
 const App = () => {
     const {user} = useAuthStore(); // HOOK ICHIDAN USERNI OL!
@@ -32,6 +33,7 @@ const App = () => {
                 }
             />
 
+            <Route path="/my-orders" element={<MyOrders />} />
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/book/:id" element={<BookDetail/>}/>

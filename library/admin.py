@@ -1,20 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from library.models import CustomUser, Aksessuar
+from library.models import CustomUser, Order
 from library.models import Book
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'price', 'category')
+    list_display = ('title', 'author', 'price')
     search_fields = ('title', 'author')
-
-class AkksessuarAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'category')
-    search_fields = ('title',)
 
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(Aksessuar, AkksessuarAdmin)
+admin.site.register(Order)
 
 
 @admin.register(CustomUser)

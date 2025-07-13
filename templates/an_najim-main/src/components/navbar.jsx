@@ -65,17 +65,28 @@ const Navbar = () => {
             className="fixed z-10 flex items-center justify-center md:px-2 px-0 md:w-[80px] md:h-full md:right-0 md:top-0 md:flex-col w-full h-[70px] left-0 bottom-0 flex-row md:left-auto md:bottom-auto">
             <ul
                 id="navbar"
-                className={`w-full ${profile?.is_staff ? 'md:h-[38%]' : 'md:h-[30%]'} h-full bg-white md:rounded-[10px] justify-center text-center md:py-2 py-0 md:px-2 px-0 shadow-xl flex md:flex-col flex-row items-center`}
+                className={`
+                w-full 
+                pt-3
+                md:h-[35%]
+                h-full bg-white md:rounded-[10px] text-center 
+                md:py-2 py-0 px-2 shadow-xl 
+                flex md:flex-col flex-row 
+                items-center 
+                sm:justify-center justify-between 
+                md:justify-center
+                overflow-x-auto whitespace-nowrap
+              `}
             >
                 <NavLink to="/home"
-                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"><FaHouse
+                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"><FaHouse
                     className="text-[#aaa] text-[20px]" id="icon"/></NavLink>
                 <NavLink to="/search"
-                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"><FaSearch
+                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"><FaSearch
                     className="text-[#aaa] text-[20px]" id="icon"/></NavLink>
                 <NavLink
                     to="/cart"
-                    className="relative flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"
+                    className="relative flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"
                 >
                     <FaShoppingCart className="text-[#aaa] text-[20px]" id="icon"/>
                     {cartCount > 0 && (
@@ -87,21 +98,19 @@ const Navbar = () => {
                     )}
                 </NavLink>
 
-                <NavLink to="/like"
-                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"><FaHeart
-                    className="text-[#aaa] text-[20px]" id="icon"/></NavLink>
-                {profile?.is_staff && (
-                    <NavLink to="/orders"
-                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"><BookOpen
-                    className="text-[#aaa] text-[20px]" id="icon"/></NavLink>
-                )}
+                {profile?.is_staff ? <NavLink to="/orders"
+                                              className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"><BookOpen
+                    className="text-[#aaa] text-[20px]" id="icon"/></NavLink> : <NavLink to="/like"
+                                                                                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"><FaHeart
+                    className="text-[#aaa] text-[20px]" id="icon"/></NavLink>}
                 <NavLink to="/profile"
-                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] mx-2 md:mx-0 mt-0 md:mt-2"><IoPersonCircleSharp
+                         className="flex items-center justify-center sm:py-2 py-4 sm:px-2 px-4 rounded-[10px] md:mx-0 mt-0 md:mt-2"><IoPersonCircleSharp
                     className="text-[#aaa] text-[20px]" id="icon"/></NavLink>
 
             </ul>
         </nav>
-    );
+    )
+        ;
 };
 
 export default Navbar;

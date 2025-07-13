@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import {MapPin, User2} from 'lucide-react';
-import { ToastContainer, toast } from "react-toastify";
-import { Phone, Mail } from 'lucide-react';
+import {ToastContainer, toast} from "react-toastify";
+import {Phone, Mail} from 'lucide-react';
+import axios from './axios.js';
 
 
 const LOCAL_PROFILE_KEY = 'profileData';
@@ -15,7 +16,7 @@ const Modal = ({open, onClose, children}) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
             <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
                 <button
-                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-2xl"
+                    className="absolute top-0 right-2 text-gray-400 py-2 px-3 cursor-pointer text-2xl"
                     onClick={onClose}
                 >
                     ×
@@ -33,36 +34,24 @@ const Profile = () => {
     const [error, setError] = useState('');
     const [editOpen, setEditOpen] = useState(false);
 
-    // Form inputs
+
     const [editUsername, setEditUsername] = useState('');
     const [editPhone, setEditPhone] = useState('');
     const [editEmail, setEditEmail] = useState('');
-    // const [editName, setEditName] = useState('');
-    // const [editPhone, setEditPhone] = useState('');
-    // const [editAddress, setEditAddress] = useState('');
-    // const [editMap, setEditMap] = useState('');
+
 
 
     useEffect(() => {
-        const token = localStorage.getItem('access');
-
-        fetch('http://127.0.0.1:8000/profile/', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
+        axios.get('http://127.0.0.1:8000/profile/')
             .then(res => {
-                if (!res.ok) throw new Error("Token noto‘g‘ri yoki muddati tugagan.");
-                return res.json();
+                setData(res.data);
             })
-            .then(data => setData(data))
-
             .catch(err => {
                 console.error("Xatolik:", err);
-                alert("Token xato yoki foydalanuvchi tizimga kirmagan.");
+                // alert("Token xato yoki foydalanuvchi tizimga kirmagan.");
             });
     }, []);
+
 
     console.log(data)
 
@@ -127,17 +116,19 @@ const Profile = () => {
 
     return (
         <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 py-8 px-4">
-            <ToastContainer />
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md flex flex-col items-center">
-                <div className="bg-blue-500 p-6 text-[50px] rounded-full mb-4">
+            <ToastContainer/>
+            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md flex flex-col items-center relative">
+                <div className="bg-green-600 p-6 text-[50px] rounded-full mb-4">
                     <User2 className='text-white w-12 h-12'/>
                 </div>
                 <h2 className="text-2xl font-bold mb-2">{data.username || 'Guest'}</h2>
-                <p className="text-gray-600 mb-2 flex"> <Phone className='py-[3px] px-[3px] mr-2'/> {data.phone || 'No phone number'}</p>
-                <p className="text-gray-600 mb-2 flex"><Mail className='py-[3px] px-[3px] mr-2'/> {data.email || 'No email'}</p>
+                <p className="text-gray-600 mb-2 flex"><Phone
+                    className='py-[3px] px-[3px] mr-2'/> {data.phone || 'No phone number'}</p>
+                <p className="text-gray-600 mb-2 flex"><Mail
+                    className='py-[3px] px-[3px] mr-2'/> {data.email || 'No email'}</p>
 
                 {data?.is_staff && (
-                    <p className="text-green-600 mb-2 flex">Siz adminsiz</p>
+                    <p className="text-white text-[12px] rounded-[5px] mb-2 flex absolute top-[10px] right-[10px] py-[3px] px-2 bg-green-600">Admin</p>
                 )}
 
                 {data?.map && (
@@ -155,7 +146,7 @@ const Profile = () => {
                 <div className="flex flex-wrap justify-center gap-3 mt-4">
                     <button
                         onClick={handleEditOpen}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
                     >
                         Edit Profile
                     </button>
@@ -212,7 +203,7 @@ const Profile = () => {
                     </div>
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
                     >
                         Saqlash
                     </button>
